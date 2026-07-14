@@ -37,6 +37,7 @@ public class LoginTest {
 
     @AfterTest
     public void tearDown() {
+        System.out.println("QUIT driver for LoginTest");
         ThreadLocalDriverFactory.quitDriver();
     }
 }

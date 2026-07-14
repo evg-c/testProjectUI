@@ -19,6 +19,7 @@ public class CurrencyTest {
     @BeforeTest
     public void setup() {
         driver = ThreadLocalDriverFactory.getDriver();
+        System.out.println("идем на сайт " + testsProperties.defaultUrl());
         driver.get(testsProperties.defaultUrl());
     }
 
@@ -29,12 +30,15 @@ public class CurrencyTest {
         List<Map<String, String>> rates = currencyPage.getMapCurrency();
         Double rate1 = currencyPage.getRateByName(money1);
         Double rate2 = currencyPage.getRateByName(money2);
+        System.out.println("Курс " + money1 + ": " + rate1);
+        System.out.println("Курс " + money2 + ": " + rate2);
         Assert.assertTrue(rate1 <  rate2,
                 "Курс " + money1 + " ожидался меньше курса " + money2 + ", но оказалось не так");
     }
 
     @AfterTest
     public void tearDown2() {
+        System.out.println("QUIT driver for CurrencyTest");
         ThreadLocalDriverFactory.quitDriver();
     }
 }

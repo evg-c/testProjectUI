@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.security.PrivateKey;
 import java.util.ArrayList;
@@ -30,6 +31,15 @@ public class CurrencyPage extends BasePage {
     private List<Map<String, String>> collectCurrency = new ArrayList<>();
 
     public List<Map<String, String>> getMapCurrency() {
+        collectCurrency.clear();
+
+        // Ждём именно появления строк таблицы (наличие, а не "видимость")
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+                By.xpath("//table[@class='data']//tbody/tr")
+        ));
+
+        wait.until(d -> d.findElements(By.xpath("//table[@class='data']//tbody/tr")).size() > 0);;
+
         for (int i = 0; i < tableRows.size(); i++) {
             Map<String, String> oneRow = new HashMap<>();
             for (int j = 0; j < tableHeaders.size(); j++) {
@@ -39,11 +49,13 @@ public class CurrencyPage extends BasePage {
             }
             collectCurrency.add(oneRow);
         }
+        System.out.println("В справочнике - " + collectCurrency.size() + " валют");
         return collectCurrency;
     }
 
     public List<Currency> getListCurrency() {
         List<Currency> result = new ArrayList<>();
+        collectCurrency = getMapCurrency();
         for (Map<String, String> oneRate: collectCurrency) {
             String nCode = oneRate.getOrDefault("Цифр. код", "");
             String strCode = oneRate.getOrDefault("Букв. код", "");
@@ -63,6 +75,7 @@ public class CurrencyPage extends BasePage {
     }
 
     public String getRowByNumberCode(int nCode) {
+        collectCurrency = getMapCurrency();
         for (Map<String, String> oneRow: collectCurrency) {
             String numberCode = oneRow.getOrDefault("Цифр. код", "0");
             int valueCode = Integer.parseInt(numberCode);
@@ -81,6 +94,7 @@ public class CurrencyPage extends BasePage {
     }
 
     public Double getRateByNumberCode(int nCode) {
+        collectCurrency = getMapCurrency();
         for (Map<String, String> oneRow: collectCurrency) {
             String numberCode = oneRow.getOrDefault("Цифр. код", "0");
             int valueCode = Integer.parseInt(numberCode);
@@ -94,6 +108,7 @@ public class CurrencyPage extends BasePage {
     }
 
     public Double getRateByStrCode(String strCode) {
+        collectCurrency = getMapCurrency();
         for (Map<String, String> oneRow: collectCurrency) {
             String stringCode = oneRow.getOrDefault("Букв. код", "");
             if (strCode.equals(stringCode)) {
@@ -106,6 +121,9 @@ public class CurrencyPage extends BasePage {
     }
 
     public Double getRateByName(String nameCurrency) {
+        if (collectCurrency.isEmpty()) {
+            collectCurrency = getMapCurrency();
+        }
         for (Map<String, String> oneRow: collectCurrency) {
             String name = oneRow.getOrDefault("Валюта", "");
             if (nameCurrency.equals(name)) {

@@ -15,8 +15,8 @@ public abstract class BasePage {
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, 10);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+        this.wait = new WebDriverWait(driver, 20);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     protected void clickElement(WebElement el) {
