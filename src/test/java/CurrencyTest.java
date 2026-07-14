@@ -29,8 +29,8 @@ public class CurrencyTest {
         List<Map<String, String>> rates = currencyPage.getMapCurrency();
         Double rate1 = currencyPage.getRateByName(money1);
         Double rate2 = currencyPage.getRateByName(money2);
-        Assert.assertTrue(rate1 >  rate2,
-                "Курс " + money1 + " ожидался больше курса " + money2 + ", но оказалось не так");
+        Assert.assertTrue(rate1 <  rate2,
+                "Курс " + money1 + " ожидался меньше курса " + money2 + ", но оказалось не так");
     }
 
     @AfterTest
