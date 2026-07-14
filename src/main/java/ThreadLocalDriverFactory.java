@@ -28,6 +28,9 @@ public class ThreadLocalDriverFactory {
                 chromeOpts.addArguments("--headless", "--disable-notifications");
                 chromeOpts.addArguments("--disable-features=PasswordLeakDetection");
                 chromeOpts.setBinary("/usr/bin/chromium");
+                // для контейнера:
+                chromeOpts.addArguments("--no-sandbox");
+                chromeOpts.addArguments("--disable-dev-shm-usage");
 
                 Map<String, Object> prefs = new HashMap<>();
                 prefs.put("credentials_enable_service", false);
