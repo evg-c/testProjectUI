@@ -23,6 +23,7 @@ public class ThreadLocalDriverFactory {
         WebDriver driver;
         switch (browser.toLowerCase()) {
             case "chrome":
+                System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
                 ChromeOptions chromeOpts = new ChromeOptions();
                 chromeOpts.addArguments("--headless", "--disable-notifications");
                 chromeOpts.addArguments("--disable-features=PasswordLeakDetection");
