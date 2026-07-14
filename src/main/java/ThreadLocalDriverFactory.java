@@ -27,6 +27,7 @@ public class ThreadLocalDriverFactory {
                 ChromeOptions chromeOpts = new ChromeOptions();
                 chromeOpts.addArguments("--headless", "--disable-notifications");
                 chromeOpts.addArguments("--disable-features=PasswordLeakDetection");
+                chromeOpts.setBinary("/usr/bin/chromium");
 
                 Map<String, Object> prefs = new HashMap<>();
                 prefs.put("credentials_enable_service", false);
