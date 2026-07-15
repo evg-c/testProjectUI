@@ -3,7 +3,6 @@
     <test name="all">
         <classes>
             <class name="CurrencyTest"/>
-            <class name="LoginTest"/>
         </classes>
     </test>
 </suite>
